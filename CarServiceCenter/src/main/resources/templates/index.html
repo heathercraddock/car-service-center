@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css" />
+	<script src= "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+	
+	<title>Car Appointments</title>
+</head>
+<body>
+<div>
+	<h2>Car Appointments</h2>
+	<div align = "left" >		   
+		     <h3><a  th:href="@{'/addnew'}">Create Appointment</a></h3>     
+	    </div>
+	
+	<div class="col-sm-5" align = "center">
+    	<div class="panel-body" align = "center" >
+        	<table class="table">
+				<thead class="thead-dark">
+					<tr>
+			      		<th>Appt ID</th>
+			            <th>Customer</th>
+			            <th>Car</th>
+			            <th>Description</th>
+			            <th>Status</th>
+			            <th>Price</th>
+			            <th>Date Set</th>
+			            <th>Manage Appointment</th>
+   					</tr>
+  				</thead>
+  				 
+  				<tbody>
+			    	<tr th:each="appt : ${allAppts}">
+						<td th:text="${appt.id}">Appt ID</td>
+						<td th:text="${appt.customer}">Customer</td>
+			            <td th:text="${appt.car}">Car</td>
+			            <td th:text="${appt.apptDesc}">Description</td>
+			            <td th:text="${appt.status}">Status</td>
+			            <td th:text="${appt.price}">Price</td>
+			            <td th:text="${#dates.format(appt.dateCreated, 'dd.MM.yyyy HH:mm')}">Date Set</td>
+			            <td>
+							<a th:href="@{'/cancel/' + ${appt.id}}">Cancel</a>
+							<a th:href="@{'/edit/' + ${appt.id}}">Edit</a>
+							<a th:href="@{'/complete/' + ${appt.id}}">Complete</a>
+							<p>Delete</p>
+						</td>
+			    	</tr> 
+			    	
+  				</tbody>
+  				
+			</table>
+		</div>
+	</div> 
+	
+</div>
+</body>
+</html>
