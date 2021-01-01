@@ -42,14 +42,14 @@ public class AppointmentController {
 		return "redirect:/";
 	}
 	
-	/*@RequestMapping("/edit/{id}")
+	@RequestMapping("/edit/{id}")
 	public ModelAndView showEditAppointmentPage(@PathVariable(name="id") int id) {
 		ModelAndView mv = new ModelAndView("addnew");
 		Appointment appt = service.getAppt(id);
 		appt.toString();
 		mv.addObject("appt", appt);
 		return mv;
-	}*/
+	}
 	
 	@RequestMapping("/complete/{id}")
 	public String completeAppointment(@PathVariable(name="id") int id) {
