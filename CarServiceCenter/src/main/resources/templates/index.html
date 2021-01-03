@@ -8,50 +8,82 @@
 	
 	<title>Car Appointments</title>
 </head>
+	
 <body>
 <div>
-	<h2>Car Appointments</h2>
-	<div align = "left" >		   
-		     <h3><a  th:href="@{'/addnew'}">Create Appointment</a></h3>     
-	    </div>
 	
-	<div class="col-sm-5" align = "center">
-    	<div class="panel-body" align = "center" >
-        	<table class="table">
+	<div class="text-center">
+	    <h1>Car Service Center</h1>
+	    <h2>Appointments</h2>
+	    <h3><a  th:href="@{'/addnew'}">Create Appointment</a></h3>
+	    <!--<h3><a  th:href="@{'/viewappointment'}">View Specific Appointment</a></h3>-->    
+ 	</div>
+  
+	<div align = "center">
+    	<div class="panel-body" align = "center" style="padding: 5em;">
+        	<table border="1" class = "table table-striped table-responsive-md">
 				<thead class="thead-dark">
-					<tr>
-			      		<th>Appt ID</th>
-			            <th>Customer</th>
-			            <th>Car</th>
-			            <th>Description</th>
-			            <th>Status</th>
-			            <th>Price</th>
-			            <th>Date Set</th>
+					<tr>			      		
+			      		<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}" style="color: #fff;">Appt ID</a></th>
+			      		<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=customerName&sortDir=' + ${reverseSortDir}}" style="color: #fff;">Customer Name</a></th>
+			            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=customerPhone&sortDir=' + ${reverseSortDir}}" style="color: #fff;">Customer Phone</a></th>
+			            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=car&sortDir=' + ${reverseSortDir}}" style="color: #fff;">Car Description</a></th>
+			            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=plateNum&sortDir=' + ${reverseSortDir}}" style="color: #fff;">License Plate</a></th>
+			            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=apptDesc&sortDir=' + ${reverseSortDir}}" style="color: #fff;">Services Required</a></th>
+			            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=status&sortDir=' + ${reverseSortDir}}" style="color: #fff;">Status</a></th>
+			            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}" style="color: #fff;">Quoted Price</a></th>
+			            <th><a th:href="@{'/page/' + ${currentPage} + '?sortField=dateCreated&sortDir=' + ${reverseSortDir}} " style="color: #fff;">Date Set</a></th>
 			            <th>Manage Appointment</th>
    					</tr>
   				</thead>
-  				 
   				<tbody>
-			    	<tr th:each="appt : ${allAppts}">
+			    	<tr th:each="appt : ${listAppointments}">
 						<td th:text="${appt.id}">Appt ID</td>
-						<td th:text="${appt.customer}">Customer</td>
+						<td th:text="${appt.customerName}">Customer Name</td>
+						<td th:text="${appt.customerPhone}">Customer Phone</td>
 			            <td th:text="${appt.car}">Car</td>
+			            <td th:text="${appt.plateNum}">License Plate</td>
 			            <td th:text="${appt.apptDesc}">Description</td>
 			            <td th:text="${appt.status}">Status</td>
 			            <td th:text="${appt.price}">Price</td>
 			            <td th:text="${#dates.format(appt.dateCreated, 'dd.MM.yyyy HH:mm')}">Date Set</td>
 			            <td>
-							<a th:href="@{'/cancel/' + ${appt.id}}">Cancel</a>
-							<a th:href="@{'/edit/' + ${appt.id}}">Edit</a>
-							<a th:href="@{'/complete/' + ${appt.id}}">Complete</a>
-							<p>Delete</p>
+			            	<a th:href="@{'/edit/' + ${appt.id}}" class="btn btn-primary">Edit</a>
+							<a th:href="@{'/cancel/' + ${appt.id}}" class="btn btn-danger">Cancel</a>
+							<a th:href="@{'/complete/' + ${appt.id}}" class="btn btn-success">Complete</a>
 						</td>
-			    	</tr> 
-			    	
-  				</tbody>
-  				
+			    	</tr> 			    	
+  				</tbody>  				
 			</table>
+			
+			<div th:if = "${totalPages > 1}">
+				<div class = "row col-sm-10">
+					<div class = "col-sm-2">
+			     		Total Rows: [[${totalItems}]] 
+			    	</div>
+			    	<div class = "col-sm-1">
+				     	<a th:if="${currentPage > 1}" th:href="@{'/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+				     	<span th:unless="${currentPage > 1}">Previous</span>
+			    	</div>
+			    	<div class = "col-sm-1">
+			     		<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+			      		<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+			      		<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+			     		</span>
+			   		</div>
+			    	<div class = "col-sm-1">
+			     		<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+			     		<span th:unless="${currentPage < totalPages}">Next</span>
+			    	</div>
+			     	<div class="col-sm-1">
+			        	<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+			     		<span th:unless="${currentPage < totalPages}">Last</span>
+			        </div>
+			  	</div>
+			</div>	
 		</div>
+		<h3><a href="http://localhost:8082/pageByAppointment?id=4">Specific appointment example</a></h3>
+		<h3><a href="http://localhost:8082/pageByDate/1?sortField=price&sortDir=desc&startDate=2021-01-01&endDate=2021-01-02">Filter datetime sort by price example</a></h3>
 	</div> 
 	
 </div>

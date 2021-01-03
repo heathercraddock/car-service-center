@@ -10,103 +10,54 @@
 <body>
 	<div align="center">
 		<h1>Create Appointment</h1>
-		<br>
-		
-		<form action="#" th:action="@{/save}" th:object="${appt}" method="post">
-		
-			<tr>
-                <label class="form-label" >Customer Name</label>
-                <td>
-	                <input type="hidden" th:field="*{id}" />
-	                <input type="text" th:field="*{customer}" class="form-control" placeholder="Customer Name" />
-                </td>
-            </tr>
-			<tr>
-                <label class="form-label" >Car Make/ Model</label>
-                <td>
-	                <input type="hidden" th:field="*{id}" />
-	                <input type="text" th:field="*{car}" class="form-control" placeholder="Insert car here" />
-                </td>
-            </tr>
-            
-            <tr>
-                <label class="form-label" >Service Description</label>
-                <td>
-	                <input type="hidden" th:field="*{id}" />
-	                <input type="text" th:field="*{apptDesc}" class="form-control" placeholder="Describe services required" />
-                </td>
-            </tr>
-            
-            <tr>
-                <label class="form-label" >Cost ($)</label>
-                <td>
-	                <input type="hidden" th:field="*{id}" />
-	                <input type="text" th:field="*{price}" class="form-control" placeholder="Enter service price" />
-                </td>
-            </tr>
-            
-            <tr>
-                <label class="form-label" >Cost ($)</label>
-                <td>
-	                <input type="hidden" th:field="*{id}" />
-	                <input type="text" th:field="*{status}" class="form-control" placeholder="Enter appointment status" />
-                </td>
-            </tr>
-            
-            <tr>
-            <td colspan="2"><button type="submit" class="btn btn-info">Save</button> </td>
-            </tr>
-            		
-		</form>
-
+    	<div class="panel-body" align = "center" style="padding-left:20%; padding-right:20%;">
+			<form action="#" th:action="@{/save}" th:object="${appt}" method="post">
+				<tr>
+					<label class="form-label" >Customer Name</label>
+	                <td><input type="hidden" th:field="*{id}" />
+		                <input type="text" th:field="*{customerName}" class="form-control" placeholder="Customer Name" /></td>
+	            </tr>
+	            <tr>
+	                <label class="form-label" >Customer Phone Number</label>
+	                <td><input type="hidden" th:field="*{id}" />
+		                <input type="text" th:field="*{customerPhone}" class="form-control" placeholder="Enter phone number" /></td>
+	            </tr>
+				<tr>
+	                <label class="form-label" >Car Make/ Model</label>
+	                <td><input type="hidden" th:field="*{id}" />
+		                <input type="text" th:field="*{car}" class="form-control" placeholder="Insert car here" /></td>
+	            </tr>
+	            <tr>
+	                <label class="form-label" >License Plate</label>
+	                <td><input type="hidden" th:field="*{id}" />
+		                <input type="text" th:field="*{plateNum}" class="form-control" placeholder="Enter license plate number" /></td>
+	            </tr>	            
+	            <tr>
+	                <label class="form-label" >Service Description</label>
+	                <td><input type="hidden" th:field="*{id}" />
+		                <input type="text" th:field="*{apptDesc}" class="form-control" placeholder="Describe services required" /></td>
+	            </tr>          
+	            <tr>
+	                <label class="form-label" >Cost ($)</label>
+	                <td><input type="hidden" th:field="*{id}" />
+		                <input type="text" th:field="*{price}" class="form-control" placeholder="Enter quoted price" /></td>
+	            </tr>
+	            <tr>
+	                <label class="form-label" >Appointment Status</label>
+	                <td>
+		                <input type="hidden" th:field="*{id}" />
+		                <select th:field="*{status}">
+		                	<option value="">--</option>
+		                	<option th:value="incomplete">Incomplete</option>
+		                	<option th:value="complete">Complete</option>
+		                </select>
+	                </td>
+	            </tr>
+	            <tr>
+	            	<td colspan="2"><button type="submit" class="btn btn-info">Save</button> </td>
+	            </tr>	
+			</form>
+		</div>
 	</div>
-
 </body>
 </html>
-
-
-<!-- 
-<body>
-<div align="center">
-    <h1>Create New Student</h1>
-    <br />
-     <div class="col-sm-4">
-    <form action="#" th:action="@{/save}" th:object="${student}" method="post">
-
-      
- 		<div alight="left">
-            <tr>
-                <label class="form-label" >Student Name</label>
-                <td>
-	                <input type="hidden" th:field="*{id}" />
-	                <input type="text" th:field="*{studentname}" class="form-control" placeholder="Student Name" />
-                </td>
-            </tr>
-         </div>   
-            
-          	<div alight="left">
-          
-            <tr>
-                 <label class="form-label" >Course</label>
-                <td><input type="text" th:field="*{course}" class="form-control" placeholder="Course" /></td>
-            </tr>
-            </div> 
-            <div alight="left">
-                 <tr>
-                 <label class="form-label" >Fee</label>
-                <td><input type="text" th:field="*{fee}" class="form-control" placeholder="Fee" /></td>
-            </tr>
-            </div> 
-			<br>
-            <tr>
-            <td colspan="2"><button type="submit" class="btn btn-info">Save</button> </td>
-            </tr>
-        </table>
-    </form>
-</div>
-</body>
-</html>
-
-
-
- -->
