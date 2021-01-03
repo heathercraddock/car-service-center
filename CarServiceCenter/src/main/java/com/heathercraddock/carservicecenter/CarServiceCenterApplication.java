@@ -14,18 +14,12 @@ import com.heathercraddock.carservicecenter.repository.AppointmentRepository;
 
 @SpringBootApplication
 
-@EnableScheduling
+//@EnableScheduling
 
 public class CarServiceCenterApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CarServiceCenterApplication.class, args);
 	}
-	
-	
-	//public Appointment returnRandomAppointment() {
-	//	Appointment appt = new Appointment();
-	//	return appt;
-	//}
 
 }

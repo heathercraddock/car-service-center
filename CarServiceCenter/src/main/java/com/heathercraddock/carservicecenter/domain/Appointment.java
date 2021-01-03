@@ -25,7 +25,12 @@ public class Appointment {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String car;
-	private String customer;
+	@Column(name = "plate_num")
+	private String plateNum;
+	@Column(name = "customer_name")
+	private String customerName;
+	@Column(name = "customer_phone")
+	private String customerPhone;
 	
 	@Column(name = "appt_description")
 	private String apptDesc;
@@ -45,16 +50,29 @@ public class Appointment {
 	}
 
 
-	public Appointment(int id, String car, String customer, String apptDesc, String status, float price,
+	public Appointment(int id, String car, String plateNum , String customerName, String customerPhone, String apptDesc, String status, float price,
 			Date dateCreated) {
 		super();
 		this.id = id;
 		this.car = car;
-		this.customer = customer;
+		this.plateNum = plateNum;
+		this.customerName = customerName;
+		this.customerPhone = customerPhone;
 		this.apptDesc = apptDesc;
 		this.status = status;
 		this.price = price;
 		this.dateCreated = dateCreated;
+	}
+	
+	public Appointment(String car, String plateNum , String customerName, String customerPhone, String apptDesc, String status, float price) {
+		super();
+		this.car = car;
+		this.plateNum = plateNum;
+		this.customerName = customerName;
+		this.customerPhone = customerPhone;
+		this.apptDesc = apptDesc;
+		this.status = status;
+		this.price = price;
 	}
 
 
@@ -78,13 +96,33 @@ public class Appointment {
 	}
 
 
-	public String getCustomer() {
-		return customer;
+	public String getPlateNum() {
+		return plateNum;
 	}
 
 
-	public void setCustomer(String customer) {
-		this.customer = customer;
+	public void setPlateNum(String plateNum) {
+		this.plateNum = plateNum;
+	}
+
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+
+	public String getCustomerPhone() {
+		return customerPhone;
+	}
+
+
+	public void setCustomerPhone(String customerPhone) {
+		this.customerPhone = customerPhone;
 	}
 
 

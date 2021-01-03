@@ -1,8 +1,10 @@
 package com.heathercraddock.carservicecenter.controller;
 
+import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.heathercraddock.carservicecenter.domain.Appointment;
@@ -23,10 +26,77 @@ public class AppointmentController {
 	
 	@GetMapping("/")
 	public String viewIndex(Model model) {
-		List<Appointment> allAppts = service.listAllAppointments();
-		model.addAttribute("allAppts", allAppts);
-		System.out.println("Displaying all appointments.");
+		model.addAttribute("a", new Appointment());
+		return(findPaginated(1, "dateCreated", "desc", model));
+	}
+	
+	@GetMapping("/page/{pageNo}")
+	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("sortField") String sortField,
+		@RequestParam("sortDir") String sortDir, Model model) {
+		int pageSize = 5;
+		
+		Page<Appointment> page = service.findPaginated(pageNo, pageSize, sortField, sortDir);
+		List<Appointment> listAppointments = page.getContent();
+		
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+	    model.addAttribute("totalItems", page.getTotalElements());
+	    
+	    model.addAttribute("sortField", sortField);
+	    model.addAttribute("sortDir", sortDir);
+	    model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+	    
+	    model.addAttribute("listAppointments", listAppointments);
 		return "index";
+	}
+	@GetMapping("pageByAppointment")
+	public String findAppointmentById(@RequestParam("id") int id, Model model) {
+		int pageNo = 1;
+		String sortField = "customerName";
+		String sortDir = "asc";
+		
+		Page<Appointment> page = service.findAppointmentAsPage(id);
+		List<Appointment> listAppointments = page.getContent();
+		
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+	    model.addAttribute("totalItems", page.getTotalElements());
+	    
+	    model.addAttribute("sortField", sortField);
+	    model.addAttribute("sortDir", sortDir);
+	    model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+	    
+	    model.addAttribute("listAppointments", listAppointments);
+		
+		return "index";
+		
+	}
+	
+	// http://localhost:8082/pageByDate/1?sortField=price&sortDir=desc&startDate=2020-12-31&endDate=2021-01-02
+	@GetMapping("/pageByDate/{pageNo}")
+	public String findPaginatedByDate(@PathVariable(value="pageNo") int pageNo, 
+			@RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir, 
+			@RequestParam("startDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
+			@RequestParam("endDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate, Model model) {
+		int pageSize = 5;
+		Page<Appointment> page = service.findPaginatedbyDate(pageNo, pageSize, sortField, sortDir, startDate, endDate);
+		List<Appointment> listAppointments = page.getContent();
+		
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+	    model.addAttribute("totalItems", page.getTotalElements());
+	    
+	    model.addAttribute("sortField", sortField);
+	    model.addAttribute("sortDir", sortDir);
+	    model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+	    
+	    model.addAttribute("startDate", startDate);
+	    model.addAttribute("endDate", endDate);
+	    
+	    model.addAttribute("listAppointments", listAppointments);
+		
+		return "index";
+		
 	}
 	
 	@GetMapping("addnew")
@@ -42,11 +112,12 @@ public class AppointmentController {
 		return "redirect:/";
 	}
 	
+	
 	@RequestMapping("/edit/{id}")
 	public ModelAndView showEditAppointmentPage(@PathVariable(name="id") int id) {
 		ModelAndView mv = new ModelAndView("addnew");
 		Appointment appt = service.getAppt(id);
-		appt.toString();
+		//appt.toString();
 		mv.addObject("appt", appt);
 		return mv;
 	}
@@ -57,16 +128,6 @@ public class AppointmentController {
 		return "redirect:/";
 	}
 	
-	/*
-	 * 
-	 * public ModelAndView showEditStudentPage(@PathVariable(name="id") int id) {
-		ModelAndView mv = new ModelAndView("new");
-		Student student = service.getStudent(id);
-		mv.addObject("student", student);
-		return mv;
-	}
-	 */
-	
 	// TODO: ADD INPUT VALIDATION THAT DOESN'T CRASH THE API
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public String saveAppt(@ModelAttribute("appt") Appointment appt) {
@@ -74,13 +135,5 @@ public class AppointmentController {
 		return "redirect:/";
 	}
 	
-	/*
-	 * @RequestMapping(value="/save", method=RequestMethod.POST)
-	public String saveStudent(@ModelAttribute("student") Student student) {
-		service.save(student);
-		return "redirect:/";
-	}
-	 * 
-	 */
 
 }

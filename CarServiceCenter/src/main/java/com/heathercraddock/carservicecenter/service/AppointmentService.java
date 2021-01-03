@@ -1,9 +1,15 @@
 package com.heathercraddock.carservicecenter.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.heathercraddock.carservicecenter.domain.Appointment;
@@ -37,5 +43,32 @@ public class AppointmentService {
 	public void saveAppointment(Appointment appt) {
 		repo.save(appt);
 	}
+	
+	public Page<Appointment> findAppointmentAsPage(int id){
+		Pageable pageable = PageRequest.of(0, 1);
+		return repo.findById(id, pageable);
+	}
+	
+	public Page<Appointment> findPaginated(int pageNo, int pageSize){
+		Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+		return repo.findAll(pageable);
+	}
+	
+	public Page<Appointment> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection){
+		//Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+		//     Sort.by(sortField).descending();
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(Sort.Order.asc(sortField).ignoreCase()) :
+			Sort.by(Sort.Order.desc(sortField).ignoreCase());
+		Pageable pageable = PageRequest.of(pageNo -1, pageSize, sort);
+		return repo.findAll(pageable);	
+	}
+
+	public Page<Appointment> findPaginatedbyDate(int pageNo, int pageSize, String sortField, String sortDirection, Date startDate, Date endDate){
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(Sort.Order.asc(sortField).ignoreCase()) :
+			Sort.by(Sort.Order.desc(sortField).ignoreCase());
+		Pageable pageable = PageRequest.of(pageNo -1, pageSize, sort);
+		return repo.findAllByDateCreatedBetween(startDate, endDate, pageable);
+	}
+	
 
 }
