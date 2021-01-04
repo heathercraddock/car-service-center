@@ -9,4 +9,4 @@ INSERT INTO `appointment` (id,car,plate_num, customer_name,customer_phone,appt_d
 INSERT INTO `appointment` (id,car,plate_num, customer_name,customer_phone,appt_description, status, price, date_created) VALUES	
 	(5, 'Vauxhall Corsa', 'AB23XY', 'John Doe', '4564563456', 'Headlight replacement, oil change, filter replacement', 'incomplete', 120, TIMESTAMP '2021-01-03 10:05:00');
 INSERT INTO `appointment` (id,car,plate_num, customer_name,customer_phone,appt_description, status, price, date_created) VALUES	
-	(6, 'Peugot 108', 'PG108', 'Sam Samson', '80080080000', 'Dead battery test', 'incomplete', 10, TIMESTAMP '2021-01-03 17:33:18');
+*	(6, 'Peugot 108', 'PG108', 'Sam Samson', '80080080000', 'Dead battery test', 'incomplete', 10, TIMESTAMP '2021-01-03 17:33:18');
