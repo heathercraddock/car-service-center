@@ -62,15 +62,20 @@ Pull from:
 `https://github.com/heathercraddock/car-service-center.git`
 
 ### Maven / Jar
-`cd` into directory containing `pom.xml`.
+`cd` into directory containing `pom.xml`
+
 `$ mvn clean package`
+
 `$ java -jar target/CarServiceCenter-0.0.1-SNAPSHOT.jar `
 
 ### Docker
 `cd` into directory containing `pom.xml`
+
 With Docker running:
 `$ docker build -t car-service-center .`
+
 `$ docker run -p 8082:8082 heathercraddock/car-service-center:1.0`
+
 
 ### Access
 `localhost:8082/`
