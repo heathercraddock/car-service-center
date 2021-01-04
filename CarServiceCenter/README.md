@@ -74,7 +74,7 @@ Pull from:
 With Docker running:
 `$ docker build -t car-service-center .`
 
-`$ docker run -p 8082:8082 heathercraddock/car-service-center:1.0`
+`$ docker run -p 8082:8082 car-service-center:1.0`
 
 
 ### Access
