@@ -86,6 +86,7 @@ With Docker running:
 - Datastore: H2
 - Docker/ Kubernetes: Docker
 - Unit Testing Framework: JUnit (some)
+
 ~~-CI/CD Orchestration~~
 
 ## Discussion
@@ -102,4 +103,4 @@ With Docker running:
 
 **Unit Testing:** Some successful tests generated in JUnit, but the test cases need more work. Tests should at minimum cater to testing the CRUD operations on the database.
 
-**CI/CD:** Missing.
+**CI/CD:** Needs to be implemented.
