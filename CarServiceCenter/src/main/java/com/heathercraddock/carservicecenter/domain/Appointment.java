@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicInsert;
 
@@ -16,11 +14,6 @@ import org.hibernate.annotations.DynamicInsert;
 @DynamicInsert
 public class Appointment {
 	
-	/*
-	 Create appointment class: must include a price, status, date (scheduled date? 
-	 date appointment was made? date completed?). Must likely include: car details, 
-	 customer details, description.
-	 */
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
@@ -163,6 +156,14 @@ public class Appointment {
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Appointment [id=" + id + ", car=" + car + ", plateNum=" + plateNum + ", customerName=" + customerName
+				+ ", customerPhone=" + customerPhone + ", apptDesc=" + apptDesc + ", status=" + status + ", price="
+				+ price + ", dateCreated=" + dateCreated + "]";
 	}
 	
 	
